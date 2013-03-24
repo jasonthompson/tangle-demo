@@ -10,6 +10,7 @@ function setUpTangle () {
             this.cookies = 4;
             this.caloriesPerCookie = 50;
             this.dailyIntake = 2900;
+            this.gender = 0;
         },
         update: function () {
             this.calories = this.cookies * this.caloriesPerCookie;

@@ -8,14 +8,18 @@
         <script type="text/javascript" src="Tangle.js"></script>
 
         <!-- TangleKit (optional) -->
-        <link rel="stylesheet" href="TangleKit/TangleKit.css" type="text/css">
+        <link rel="stylesheet" href="css/styles.css" type="text/css">
         <script type="text/javascript" src="TangleKit/mootools.js"></script>
         <script type="text/javascript" src="TangleKit/sprintf.js"></script>
         <script type="text/javascript" src="TangleKit/BVTouchable.js"></script>
         <script type="text/javascript" src="TangleKit/TangleKit.js"></script>
 
-        <!-- example -->
+        <!-- newCookiesExample javascript -->
         <script type="text/javascript" src="Examples/newCookieExample.js"></script>
+
+        <!-- Typekit -->
+        <script type="text/javascript" src="//use.typekit.net/tdh0dfw.js"></script>
+        <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
 </head>
 
 <body onload="setUpTangle();">
@@ -23,8 +27,8 @@
         <p>This is a simple reactive document.</p>
 
         <p id="example">
-                When you eat <span data-var="cookies" class="TKAdjustableNumber" data-min="2" data-max="100"> cookies</span>, you
-                will consume <span data-var="calories"></span> calories. According to <a href="http://www.hc-sc.gc.ca/fn-an/food-guide-aliment/basics-base/1_1_1-eng.php" title="Estimated Energy Guide">Health Canada</a>, if you're a male aged 31-50 with an active activity level, that's <span data-var="percentageOfDailyIntake"></span>% of your daily suggested energy intake of <span data-var="dailyIntake"> </span> calories.
+                When you eat <span data-var="cookies" class="TKAdjustableNumber dataVar" data-min="2" data-max="100"> cookies</span>, you
+                will consume <span data-var="calories" class="dataVar"></span> calories. According to <a href="http://www.hc-sc.gc.ca/fn-an/food-guide-aliment/basics-base/1_1_1-eng.php" title="Estimated Energy Guide">Health Canada</a>, if you're a <span data-var="gender" class="TKSwitch TKToggle dataVar"><span>male</span><span>female</span></span> aged 31-50 with an active activity level, that's <span data-var="percentageOfDailyIntake" class="dataVar"></span>% of your daily suggested energy intake of <span data-var="dailyIntake" class="dataVar"> </span> calories.
 
 </body>
 </html>

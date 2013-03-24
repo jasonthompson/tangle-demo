@@ -1,0 +1,10 @@
+@import url("../TangleKit/TangleKit.css");
+
+body {
+    font-family:"ratio", helvetica, sans-serif;
+    line-height: 1.5;
+}
+.dataVar {
+    font-weight: 500;
+    background:#eee;
+}
