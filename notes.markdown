@@ -1,2 +1,0 @@
-- Move cookie example into its own files
-- Add underscore.js

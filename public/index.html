@@ -1,50 +1,63 @@
 <!DOCTYPE html>
 <html>
-<head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>Cookie Intake</title>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>A Reactive Document Using Tangle.js</title>
 
-        <!-- Tangle -->
-        <script type="text/javascript" src="Tangle.js"></script>
+    <!-- Tangle -->
+    <script type="text/javascript" src="js/Tangle.js"></script>
 
-        <!-- TangleKit (optional) -->
-        <link rel="stylesheet" href="css/styles.css" type="text/css">
-        <script type="text/javascript" src="TangleKit/mootools.js"></script>
-        <script type="text/javascript" src="TangleKit/sprintf.js"></script>
-        <script type="text/javascript" src="TangleKit/BVTouchable.js"></script>
-        <script type="text/javascript" src="TangleKit/TangleKit.js"></script>
+    <!-- TangleKit (optional) -->
+    <link rel="stylesheet" href="css/styles.css" type="text/css">
+    <script type="text/javascript" src="js/TangleKit/mootools.js"></script>
+    <script type="text/javascript" src="js/TangleKit/sprintf.js"></script>
+    <script type="text/javascript" src="js/TangleKit/BVTouchable.js"></script>
+    <script type="text/javascript" src="js/TangleKit/TangleKit.js"></script>
 
-        <!-- newCookiesExample javascript -->
-        <script type="text/javascript" src="Examples/newCookieExample.js"></script>
+    <!-- newCookiesExample javascript -->
+    <script type="text/javascript" src="js/newCookieExample.js"></script>
 
-        <!-- Typekit -->
-        <script type="text/javascript" src="//use.typekit.net/tdh0dfw.js"></script>
-        <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-</head>
+    <!-- Typekit -->
+    <script type="text/javascript" src="//use.typekit.net/tdh0dfw.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+  </head>
 
-<body onload="setUpTangle();">
+  <body onload="setUpTangle();">
+    <div id="wrapper">
+    <h1>A Reactive Document Using <a href="https://github.com/worrydream/Tangle" title="Tangle">Tangle</a></h1>
+    <p>The example below builds on the <a href="https://github.com/worrydream/Tangle/blob/master/Examples/CookieExample.js" title="Cookie Example from the Tangle library">CookieExample.js</a> file that comes with <a href="https://github.com/worrydream/Tangle" title="Tangle">Tangle</a>, a javascript library for creating explorable explanations. The library's author, Bret Victor, describes the philosophy behind this library in his essay <a href="http://worrydream.com/ExplorableExplanations/" title="Explorable Explanations">Explorable Explanations</a>. The original example includes the first sentence &mdash; I added the second sentence with Health Canada's daily recommended calorie intake. You can click on the blue data items with the dashed underline to manipulate the data. As you do so, the values change.</p>
 
-        <h1>A Reactive Document Using <a href="https://github.com/worrydream/Tangle" title="Tangle">Tangle</a></h1>
+<p>The Health Canada numbers are problematic since they rely on the average body mass index. My goal here was to play with the library starting from a simple example, not to provide a resource for calculating how many cookies you're allowed per day.</p>
+    <div id="example-wrapper">
+    <h2>Example Reactive Document</h2>
+<p id="example">
+      When you eat <span data-var="cookies" class="TKAdjustableNumber dataVar" data-min="2" data-max="100"> cookies</span>, you will consume <span data-var="calories" class="dataVar"></span> calories. According to <a href="http://www.hc-sc.gc.ca/fn-an/food-guide-aliment/basics-base/1_1_1-eng.php" title="Estimated Energy Guide">Health Canada</a>, if you're a
+      <span data-var="gender" class="TKSwitch TKToggle dataVar">
+        <span>male</span>
+        <span>female</span>
+      </span> aged
+      <span data-var="ageRange" class="TKSelect TKSwitch dataVar">
+        <span>2-3</span>
+        <span>4-5</span>
+        <span>6-7</span>
+        <span>8-9</span>
+        <span>10-11</span>
+        <span>12-13</span>
+        <span>14-16</span>
+        <span>17-18</span>
+        <span>19-30</span>
+        <span>31-50</span>
+        <span>51-70</span>
+        <span>71-150</span>
+      </span>
 
-        <p id="example">
-                When you eat <span data-var="cookies" class="TKAdjustableNumber dataVar" data-min="2" data-max="100"> cookies</span>, you
-                will consume <span data-var="calories" class="dataVar"></span> calories. According to <a href="http://www.hc-sc.gc.ca/fn-an/food-guide-aliment/basics-base/1_1_1-eng.php" title="Estimated Energy Guide">Health Canada</a>, if you're a <span data-var="gender" class="TKSwitch TKToggle dataVar"><span>male</span><span>female</span></span> aged
-                <span data-var="ageRange" class="TKSelect TKSwitch dataVar">
-                  <span>2-3</span>
-                  <span>4-5</span>
-                  <span>6-7</span>
-                  <span>8-9</span>
-                  <span>10-11</span>
-                  <span>12-13</span>
-                  <span>14-16</span>
-                  <span>17-18</span>
-                  <span>19-30</span>
-                  <span>31-50</span>
-                  <span>51-70</span>
-                  <span>71-150</span>
-                </span>
-
-with <span data-var="activityLevel" class="dataVar TKSelect TKSwitch"><span>a sedentary</span><span>a low active</span><span>an active</span></span> activity level, that's <span data-var="percentageOfDailyIntake" class="dataVar"></span>% of your daily suggested energy intake of <span data-var="dailyIntake" class="dataVar"> </span> calories.
-
-</body>
+      with
+      <span data-var="activityLevel" class="dataVar TKSelect TKSwitch">
+        <span>a sedentary</span>
+        <span>a low active</span>
+        <span>an active</span></span>
+      activity level, that's <span data-var="percentageOfDailyIntake" class="dataVar"></span>% of your daily suggested energy intake of <span data-var="dailyIntake" class="dataVar"> </span> calories.
+      </div><!-- wrapper -->
+      </div><!-- wrapper -->
+  </body>
 </html>
