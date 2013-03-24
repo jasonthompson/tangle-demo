@@ -19,14 +19,14 @@
 //  Attributes:  data-invert (optional):  show if false instead.
 
 Tangle.classes.TKIf = {
-    
+
     initialize: function (element, options, tangle, variable) {
         this.isInverted = !!options.invert;
     },
-    
+
     update: function (element, value) {
         if (this.isInverted) { value = !value; }
-        if (value) { element.style.removeProperty("display"); } 
+        if (value) { element.style.removeProperty("display"); }
         else { element.style.display = "none" };
     }
 };
@@ -44,7 +44,7 @@ Tangle.classes.TKSwitch = {
 
     update: function (element, value) {
         element.getChildren().each( function (child, index) {
-            if (index != value) { child.style.display = "none"; } 
+            if (index != value) { child.style.display = "none"; }
             else { child.style.removeProperty("display"); }
         });
     }
@@ -82,6 +82,27 @@ Tangle.classes.TKToggle = {
     }
 };
 
+//----------------------------------------------------------
+//
+// TKSelect
+//
+// Click to choose between a given set of values.
+
+Tangle.classes.TKSelect = {
+
+    initialize: function (element, options, tangle, variable) {
+        element.addEvent("click", function (event) {
+            var selections = element.getChildren();
+            var isActive = tangle.getValue(variable);
+            if(isActive < selections.length -1){
+                tangle.setValue(variable, isActive + 1);
+            } else {
+                tangle.setValue(variable, 0);
+            }
+
+        });
+    }
+};
 
 //----------------------------------------------------------
 //
@@ -95,30 +116,30 @@ Tangle.classes.TKNumberField = {
 
     initialize: function (element, options, tangle, variable) {
         this.input = new Element("input", {
-    		type: "text",
-    		"class":"TKNumberFieldInput",
-    		size: options.size || 6
+                type: "text",
+                "class":"TKNumberFieldInput",
+                size: options.size || 6
         }).inject(element, "top");
-        
+
         var inputChanged = (function () {
             var value = this.getValue();
             tangle.setValue(variable, value);
         }).bind(this);
-        
+
         this.input.addEvent("keyup",  inputChanged);
         this.input.addEvent("blur",   inputChanged);
         this.input.addEvent("change", inputChanged);
-	},
-	
-	getValue: function () {
+        },
+
+        getValue: function () {
         var value = parseFloat(this.input.get("value"));
         return isNaN(value) ? 0 : value;
-	},
-	
-	update: function (element, value) {
-	    var currentValue = this.getValue();
-	    if (value !== currentValue) { this.input.set("value", "" + value); }
-	}
+        },
+
+        update: function (element, value) {
+            var currentValue = this.getValue();
+            if (value !== currentValue) { this.input.set("value", "" + value); }
+        }
 };
 
 
@@ -144,7 +165,7 @@ Tangle.classes.TKAdjustableNumber = {
         this.min = (options.min !== undefined) ? parseFloat(options.min) : 0;
         this.max = (options.max !== undefined) ? parseFloat(options.max) : 1e100;
         this.step = (options.step !== undefined) ? parseFloat(options.step) : 1;
-        
+
         this.initializeHover();
         this.initializeHelp();
         this.initializeDrag();
@@ -152,19 +173,19 @@ Tangle.classes.TKAdjustableNumber = {
 
 
     // hover
-    
+
     initializeHover: function () {
         this.isHovering = false;
         this.element.addEvent("mouseenter", (function () { this.isHovering = true;  this.updateRolloverEffects(); }).bind(this));
         this.element.addEvent("mouseleave", (function () { this.isHovering = false; this.updateRolloverEffects(); }).bind(this));
     },
-    
+
     updateRolloverEffects: function () {
         this.updateStyle();
         this.updateCursor();
         this.updateHelp();
     },
-    
+
     isActive: function () {
         return this.isDragging || (this.isHovering && !isAnyAdjustableNumberDragging);
     },
@@ -172,7 +193,7 @@ Tangle.classes.TKAdjustableNumber = {
     updateStyle: function () {
         if (this.isDragging) { this.element.addClass("TKAdjustableNumberDown"); }
         else { this.element.removeClass("TKAdjustableNumberDown"); }
-        
+
         if (!this.isDragging && this.isActive()) { this.element.addClass("TKAdjustableNumberHover"); }
         else { this.element.removeClass("TKAdjustableNumberHover"); }
     },
@@ -191,7 +212,7 @@ Tangle.classes.TKAdjustableNumber = {
         this.helpElement.setStyle("display", "none");
         this.helpElement.set("text", "drag");
     },
-    
+
     updateHelp: function () {
         var size = this.element.getSize();
         var top = -size.y + 7;
@@ -202,12 +223,12 @@ Tangle.classes.TKAdjustableNumber = {
 
 
     // drag
-    
+
     initializeDrag: function () {
         this.isDragging = false;
         new BVTouchable(this.element, this);
     },
-    
+
     touchDidGoDown: function (touches) {
         this.valueAtMouseDown = this.tangle.getValue(this.variable);
         this.isDragging = true;
@@ -215,14 +236,14 @@ Tangle.classes.TKAdjustableNumber = {
         this.updateRolloverEffects();
         this.updateStyle();
     },
-    
+
     touchDidMove: function (touches) {
         var value = this.valueAtMouseDown + touches.translation.x / 5 * this.step;
         value = ((value / this.step).round() * this.step).limit(this.min, this.max);
         this.tangle.setValue(this.variable, value);
         this.updateHelp();
     },
-    
+
     touchDidGoUp: function (touches) {
         this.isDragging = false;
         isAnyAdjustableNumberDragging = false;
@@ -273,7 +294,7 @@ Tangle.formats.abs_e6 = function (value) {
 Tangle.formats.freq = function (value) {
     if (value < 100) { return "" + value.round(1) + " Hz"; }
     if (value < 1000) { return "" + value.round(0) + " Hz"; }
-    return "" + (value / 1000).round(2) + " KHz"; 
+    return "" + (value / 1000).round(2) + " KHz";
 };
 
 Tangle.formats.dollars = function (value) {
@@ -289,8 +310,7 @@ Tangle.formats.percent = function (value) {
 };
 
 
-    
+
 //----------------------------------------------------------
 
 })();
-
